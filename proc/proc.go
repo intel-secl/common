@@ -11,7 +11,7 @@ import (
 	"sync"
 	"syscall"
 	"time"
-	cLog "intel/isecl/lib/common/log"
+	cLog "intel/isecl/lib/common/v2/log"
 )
 
 var log = cLog.GetDefaultLogger()

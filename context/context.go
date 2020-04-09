@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"net/http"
 
-	types "intel/isecl/lib/common/types/aas"
+	types "intel/isecl/lib/common/v2/types/aas"
 )
 
 type httpContextKey string

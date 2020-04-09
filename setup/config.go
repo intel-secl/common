@@ -9,7 +9,7 @@ import (
 	"errors"
 	"os"
 
-	"intel/isecl/lib/common/serialize"
+	"intel/isecl/lib/common/v2/serialize"
 )
 
 type Config struct {
