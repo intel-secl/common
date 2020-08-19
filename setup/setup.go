@@ -11,7 +11,7 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
-	commLog "intel/isecl/lib/common/v2/log"
+	commLog "intel/isecl/lib/common/v3/log"
 )
 
 var log = commLog.GetDefaultLogger()
