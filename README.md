@@ -14,12 +14,12 @@ export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
 ### Direct dependencies
 
-| Name                  | Repo URL                        | Minimum Version Required              |
-| ----------------------| --------------------------------| :------------------------------------:|
-| logrus                | github.com/sirupsen/logrus      | v1.4.0                                |
-| dgrijalva jwt-go      | github.com/dgrijalva/jwt-go     | v3.2.0+incompatible                   |
-| gorilla mux           | github.com/gorilla/mux          | v1.7.3  				  |
-| yaml for Go           | gopkg.in/yaml.v2                | v2.2.2                                |
+| Name                  | Repo URL                        | Minimum Version Required                           |
+| ----------------------| --------------------------------| :-------------------------------------------------:|
+| logrus                | github.com/sirupsen/logrus      | v1.4.0                                             |
+| dgrijalva jwt-go      | github.com/Waterdrips/jwt-go    | v3.2.1-0.20200915121943-f6506928b72e+incompatible  |
+| gorilla mux           | github.com/gorilla/mux          | v1.7.3  				                           |
+| yaml for Go           | gopkg.in/yaml.v2                | v2.2.2                                             |
 
 *Note: All dependencies are listed in go.mod*
 

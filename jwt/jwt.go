@@ -18,7 +18,7 @@ import (
 	"strings"
 	"time"
 
-	jwt "github.com/dgrijalva/jwt-go"
+	jwt "github.com/Waterdrips/jwt-go"
 )
 
 const (
