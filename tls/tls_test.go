@@ -71,7 +71,7 @@ func TestVerifyCertBySha384(t *testing.T) {
 	tlsConfig := tls.Config{
 		InsecureSkipVerify:    true,
 		VerifyPeerCertificate: VerifyCertBySha384(certDigest),
-	}
+	} // test code hence skip verify
 	transport := http.Transport{
 		TLSClientConfig: &tlsConfig,
 	}
@@ -115,7 +115,7 @@ func TestVerifyCertBySha256(t *testing.T) {
 	tlsConfig := tls.Config{
 		InsecureSkipVerify:    true,
 		VerifyPeerCertificate: VerifyCertBySha256(certDigest),
-	}
+	} // test code hence skip verify
 	transport := http.Transport{
 		TLSClientConfig: &tlsConfig,
 	}

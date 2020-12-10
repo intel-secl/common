@@ -48,9 +48,11 @@ func DownloadRootCaCertificate(cmsBaseUrl string, dirPath string, trustedTlsCert
                 return fmt.Errorf("CA certificate setup: %v", err)
         }
         req.Header.Set("Accept", "application/x-pem-file")
+        //InsecureSkipVerify is set to true as connection is validated manually
         client := &http.Client{
                 Transport: &http.Transport{
                         TLSClientConfig: &tls.Config{
+                                MinVersion: tls.VersionTLS12,
                                 InsecureSkipVerify: true,
                         },
                 },
