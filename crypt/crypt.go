@@ -178,7 +178,7 @@ func GetCertHexSha384(filePath string) (string, error) {
 
 // RetrieveValidatedPeerCert retrieves the cert of a remote server and matches it against a supplied hash.
 // Optionally, if permitted via trustFirstCert accepts the certificate presented by the remote server
-func RetrieveValidatedPeerCert(baseUrl string, trustFirstCert bool, trustedThumbprint string, hashAlg crypto.Hash) ( *x509.Certificate, error) {
+func RetrieveValidatedPeerCert(baseUrl string, trustFirstCert bool, trustedThumbprint string, hashAlg crypto.Hash) (*x509.Certificate, error) {
 
 	if !trustFirstCert && trustedThumbprint == "" {
 		return nil, fmt.Errorf("trustedThumbprint not provided and trusting retrieved cert not allowed")
@@ -200,10 +200,10 @@ func RetrieveValidatedPeerCert(baseUrl string, trustFirstCert bool, trustedThumb
 
 	//InsecureSkipVerify is set to true as connection is validated manually
 	conn, err := tls.Dial("tcp", dialString, &tls.Config{
-		MinVersion: tls.VersionTLS12,
-		InsecureSkipVerify:true})
+		MinVersion:         tls.VersionTLS12,
+		InsecureSkipVerify: true})
 	if err != nil {
-		return nil, fmt.Errorf("could not tcp connect to %s, error: %s: ", dialString, err )
+		return nil, fmt.Errorf("could not tcp connect to %s, error: %s: ", dialString, err)
 	}
 
 	err = conn.Handshake()

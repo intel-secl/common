@@ -7,14 +7,15 @@ package setup
 import (
 	"fmt"
 	"github.com/pkg/errors"
+	commLog "intel/isecl/lib/common/v3/log"
 	"os"
 	"reflect"
 	"strconv"
 	"strings"
-	commLog "intel/isecl/lib/common/v3/log"
 )
 
 var log = commLog.GetDefaultLogger()
+
 // Task defines a Setup Task. Run() executes the setup task, and Validate() checks whether or not the task succeeded.
 // Validate() can and should be run as the first statement of Run() so needless work isn't done again.
 type Task interface {
@@ -55,11 +56,11 @@ func (r *Runner) RunTasks(tasks ...string) error {
 		for _, t := range r.Tasks {
 			taskName := strings.ToLower(reflect.TypeOf(t).Name())
 			if err := t.Run(ctx); err != nil {
-				fmt.Fprintln(os.Stderr,"Error while running setup task:",taskName)
+				fmt.Fprintln(os.Stderr, "Error while running setup task:", taskName)
 				return errors.Wrapf(err, "setup/setup.go:RunTasks() Error while running setup task %s", taskName)
 			}
 			if err := t.Validate(ctx); err != nil {
-				fmt.Fprintln(os.Stderr,"Error while validating setup task:",taskName)
+				fmt.Fprintln(os.Stderr, "Error while validating setup task:", taskName)
 				return errors.Wrapf(err, "setup/setup.go:RunTasks() Error while validating setup task %s", taskName)
 			}
 		}
@@ -75,14 +76,14 @@ func (r *Runner) RunTasks(tasks ...string) error {
 			taskName := strings.ToLower(reflect.TypeOf(t).Name())
 			if _, ok := enabledTasks[taskName]; ok {
 				if err := t.Run(ctx); err != nil {
-					fmt.Fprintln(os.Stderr,"Error while running setup task:",taskName)
+					fmt.Fprintln(os.Stderr, "Error while running setup task:", taskName)
 					return errors.Wrapf(err, "setup/setup.go:RunTasks() Error while running setup task %s", taskName)
 				}
 				if err := t.Validate(ctx); err != nil {
-					fmt.Fprintln(os.Stderr,"Error while validating setup task:",taskName)
+					fmt.Fprintln(os.Stderr, "Error while validating setup task:", taskName)
 					return errors.Wrapf(err, "setup/setup.go:RunTasks() Error while validating setup task %s", taskName)
 				}
-				fmt.Fprintln(os.Stdout,"Setup task finished successfully:",taskName)
+				fmt.Fprintln(os.Stdout, "Setup task finished successfully:", taskName)
 			}
 		}
 	}

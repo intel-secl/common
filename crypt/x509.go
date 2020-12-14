@@ -209,7 +209,7 @@ func GetPublicKeyFromCertPem(certPem []byte) (crypto.PublicKey, error) {
 
 func GetCertFromPem(certPem []byte) (*x509.Certificate, error) {
 	block, _ := pem.Decode(certPem)
-	if block == nil || block.Type != "CERTIFICATE"  {
+	if block == nil || block.Type != "CERTIFICATE" {
 		return nil, fmt.Errorf("failed to parse certificate PEM")
 	}
 	cert, err := x509.ParseCertificate(block.Bytes)
@@ -222,7 +222,7 @@ func GetCertFromPem(certPem []byte) (*x509.Certificate, error) {
 func GetCertAndChainFromPem(certPem []byte) (cert *x509.Certificate, chain *x509.CertPool, err error) {
 
 	block, rest := pem.Decode(certPem)
-	if block == nil  || block.Type != "CERTIFICATE"{
+	if block == nil || block.Type != "CERTIFICATE" {
 		return nil, nil, fmt.Errorf("failed to parse certificate PEM")
 	}
 
@@ -345,7 +345,7 @@ func SavePemCertWithShortSha1FileName(certPem []byte, dir string) error {
 	// the header
 
 	for block, rest := pem.Decode(certPem); block != nil && block.Type == "CERTIFICATE"; block, rest = pem.Decode(rest) {
-		pem.Encode(certOut, &pem.Block{Type: "CERTIFICATE", Bytes: block.Bytes}); 
+		pem.Encode(certOut, &pem.Block{Type: "CERTIFICATE", Bytes: block.Bytes})
 	}
 
 	return nil

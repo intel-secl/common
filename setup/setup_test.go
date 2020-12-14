@@ -52,6 +52,6 @@ func TestOverrideValueFromEnvVarStringVals(t *testing.T) {
 	assert.EqualError(t, err, "env var TRUSTAGENT_USER cannot be empty")
 
 	os.Unsetenv("TRUSTAGENT_USER")
-	
+
 	fmt.Println("done")
 }
