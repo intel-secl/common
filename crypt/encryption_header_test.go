@@ -5,8 +5,8 @@
 package crypt
 
 import (
-	"testing"
 	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 func TestEncryptionHeaderExistsTrue(t *testing.T) {

@@ -22,7 +22,7 @@ import (
 )
 
 const (
-	defaultTokenValidity time.Duration = 24 * time.Hour
+	defaultTokenValidity    time.Duration = 24 * time.Hour
 	gracePeriodForClockSkew time.Duration = 30 * time.Second
 )
 
@@ -42,7 +42,7 @@ func (e MatchingCertJustExpired) Error() string {
 	return fmt.Sprintf("certificate with matching public key just expired. kid (key id) : %s", e.KeyId)
 }
 
-type VerifierExpiredError struct{
+type VerifierExpiredError struct {
 	expiry time.Time
 }
 
@@ -50,8 +50,7 @@ func (e VerifierExpiredError) Error() string {
 	return fmt.Sprintf("verifier expired at %v", e.expiry)
 }
 
-type NoValidCertFoundError struct{
-
+type NoValidCertFoundError struct {
 }
 
 func (e NoValidCertFoundError) Error() string {
@@ -105,14 +104,14 @@ func (t *Token) GetHeader() *map[string]interface{} {
 	return &t.jwtToken.Header
 }
 
-type verifierKey struct{
-	pubKey crypto.PublicKey
+type verifierKey struct {
+	pubKey  crypto.PublicKey
 	expTime time.Time
 }
 
 type verifierPrivate struct {
 	expiration time.Time
-	pubKeyMap  map[string] verifierKey
+	pubKeyMap  map[string]verifierKey
 }
 
 type Verifier interface {
@@ -252,11 +251,11 @@ func (v *verifierPrivate) ValidateTokenAndGetClaims(tokenString string, customCl
 				// if the certificate just expired.. we need to return appropriate error
 				// so that the caller can deal with it appropriately
 				now := time.Now()
-				if now.After(matchPubKey.expTime){
+				if now.After(matchPubKey.expTime) {
 					return nil, &MatchingCertJustExpired{keyIDString}
 				}
 				// if the verifier expired, we need to use a new instance of the verifier
-				if time.Now().After(v.expiration){
+				if time.Now().After(v.expiration) {
 					return nil, &VerifierExpiredError{v.expiration}
 				}
 				return matchPubKey.pubKey, nil
@@ -269,7 +268,7 @@ func (v *verifierPrivate) ValidateTokenAndGetClaims(tokenString string, customCl
 
 	if err != nil {
 		if jwtErr, ok := err.(*jwt.ValidationError); ok {
-			switch e := jwtErr.Inner.(type){
+			switch e := jwtErr.Inner.(type) {
 			case *MatchingCertNotFoundError, *VerifierExpiredError, *MatchingCertJustExpired:
 				return nil, e
 			}
@@ -302,7 +301,6 @@ func (v *verifierPrivate) ValidateTokenAndGetClaims(tokenString string, customCl
 
 func NewVerifier(signingCertPems interface{}, rootCAPems [][]byte, cacheTime time.Duration) (Verifier, error) {
 
-
 	v := verifierPrivate{expiration: time.Now().Add(cacheTime)}
 	v.pubKeyMap = make(map[string]verifierKey)
 
@@ -329,7 +327,6 @@ func NewVerifier(signingCertPems interface{}, rootCAPems [][]byte, cacheTime tim
 		Roots: roots,
 	}
 
-
 	for _, certPem := range certPemSlice {
 		// TODO - we should validate the certificate here as well
 		// we might just want to take the certificate from the pem here itself
@@ -345,7 +342,7 @@ func NewVerifier(signingCertPems interface{}, rootCAPems [][]byte, cacheTime tim
 		// if certificate is not self signed, then we have to validate the cert
 		// this implies that we are allowing self signed certificate.
 		if !(cert.IsCA && cert.BasicConstraintsValid) {
-			if _, err := cert.Verify(verifyRootCAOpts); err != nil  {
+			if _, err := cert.Verify(verifyRootCAOpts); err != nil {
 				continue
 			}
 		}
@@ -362,7 +359,7 @@ func NewVerifier(signingCertPems interface{}, rootCAPems [][]byte, cacheTime tim
 		v.pubKeyMap[certHash] = verifierKey{pubKey: pubKey, expTime: cert.NotAfter}
 		// update the validity of the object if the certificate expires before the current validity
 		// TODO: set the expiration when based on CRL when it become available
-		if v.expiration.After(cert.NotAfter){
+		if v.expiration.After(cert.NotAfter) {
 			v.expiration = cert.NotAfter
 		}
 	}

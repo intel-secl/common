@@ -6,8 +6,8 @@
 package serialize
 
 import (
-	"os"
 	"io/ioutil"
+	"os"
 
 	yaml "gopkg.in/yaml.v2"
 )
