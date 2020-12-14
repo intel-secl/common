@@ -41,8 +41,8 @@ func ValidatePermissionAndGetPermissionsContext(privileges []types.PermissionInf
 				for reqRuleIndex, reqRule := range reqPermissions.Rules {
 					if isAuthorized(rule, reqRule) {
 						if len(reqPermissions.Rules) > 1 {
-							reqPermissions.Rules[reqRuleIndex] = reqPermissions.Rules[len(reqPermissions.Rules) - 1]
-							reqPermissions.Rules = reqPermissions.Rules[:len(reqPermissions.Rules) - 1]
+							reqPermissions.Rules[reqRuleIndex] = reqPermissions.Rules[len(reqPermissions.Rules)-1]
+							reqPermissions.Rules = reqPermissions.Rules[:len(reqPermissions.Rules)-1]
 						} else {
 							if strings.TrimSpace(permission.Context) == "" && retNilCtxForEmptyCtx == true {
 								return nil, true

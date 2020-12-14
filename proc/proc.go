@@ -6,12 +6,12 @@ package proc
 
 import (
 	"errors"
+	cLog "intel/isecl/lib/common/v3/log"
 	"os"
 	"os/signal"
 	"sync"
 	"syscall"
 	"time"
-	cLog "intel/isecl/lib/common/v3/log"
 )
 
 var log = cLog.GetDefaultLogger()
@@ -41,7 +41,6 @@ func AddTask(force_wait bool) (<-chan bool, error) {
 	wg.Add(1)
 	return QuitChan, nil
 }
-
 
 func TaskDone() {
 	wg.Done()

@@ -58,9 +58,9 @@ type UserCred struct {
 }
 
 type PasswordChange struct {
-	UserName string `json:"username"`
-	OldPassword string `json:"old_password"`
-	NewPassword string `json:"new_password"`
+	UserName        string `json:"username"`
+	OldPassword     string `json:"old_password"`
+	NewPassword     string `json:"new_password"`
 	PasswordConfirm string `json:"password_confirm"`
 }
 
