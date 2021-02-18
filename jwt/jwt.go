@@ -104,6 +104,13 @@ func (t *Token) GetHeader() *map[string]interface{} {
 	return &t.jwtToken.Header
 }
 
+func (t *Token) GetSubject() string {
+	if t.standardClaims == nil {
+		return ""
+	}
+	return t.standardClaims.Subject
+}
+
 type verifierKey struct {
 	pubKey  crypto.PublicKey
 	expTime time.Time

@@ -66,5 +66,5 @@ type PasswordChange struct {
 
 type AuthClaims struct {
 	Roles       []RoleInfo       `json:"roles"`
-	Permissions []PermissionInfo `json:"permissions,omitempty",`
+	Permissions []PermissionInfo `json:"permissions,omitempty"`
 }

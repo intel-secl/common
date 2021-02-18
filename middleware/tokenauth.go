@@ -66,6 +66,7 @@ func NewTokenAuth(signingCertsDir, trustedCAsDir string, fnGetJwtCerts RetriveJw
 
 			// the second item in the slice should be the jwtToken. let try to validate
 			claims := ct.AuthClaims{}
+			var token *jwtauth.Token
 			var err error
 
 			// There are two scenarios when we retry the ValidateTokenAndClaims.
@@ -87,11 +88,14 @@ func NewTokenAuth(signingCertsDir, trustedCAsDir string, fnGetJwtCerts RetriveJw
 					needInit = false
 				}
 				retryNeeded = false
-				_, err = jwtVerifier.ValidateTokenAndGetClaims(strings.TrimSpace(splitAuthHeader[1]), &claims)
+				token, err = jwtVerifier.ValidateTokenAndGetClaims(strings.TrimSpace(splitAuthHeader[1]), &claims)
 				if err != nil && !looped {
 					switch err.(type) {
 					case *jwtauth.MatchingCertNotFoundError, *jwtauth.MatchingCertJustExpired:
-						fnGetJwtCerts()
+						err = fnGetJwtCerts()
+						if err != nil {
+							log.WithError(err).Error("failed to get jwt certificate")
+						}
 						retryNeeded = true
 					case *jwtauth.VerifierExpiredError:
 						retryNeeded = true
@@ -111,6 +115,7 @@ func NewTokenAuth(signingCertsDir, trustedCAsDir string, fnGetJwtCerts RetriveJw
 
 			r = context.SetUserRoles(r, claims.Roles)
 			r = context.SetUserPermissions(r, claims.Permissions)
+			r = context.SetTokenSubject(r, token.GetSubject())
 			next.ServeHTTP(w, r)
 		})
 	}
