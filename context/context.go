@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"net/http"
 
-	types "intel/isecl/lib/common/v3/types/aas"
+	types "intel/isecl/lib/common/v4/types/aas"
 )
 
 const (

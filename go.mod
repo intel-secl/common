@@ -1,4 +1,4 @@
-module intel/isecl/lib/common/v3
+module intel/isecl/lib/common/v4
 
 require (
 	github.com/Waterdrips/jwt-go v3.2.1-0.20200915121943-f6506928b72e+incompatible

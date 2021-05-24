@@ -12,7 +12,7 @@ import (
 	"flag"
 	"fmt"
 	errorLog "github.com/pkg/errors"
-	"intel/isecl/lib/common/v3/crypt"
+	"intel/isecl/lib/common/v4/crypt"
 	"io"
 	"io/ioutil"
 	"net/http"
