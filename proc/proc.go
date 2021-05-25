@@ -6,7 +6,7 @@ package proc
 
 import (
 	"errors"
-	cLog "intel/isecl/lib/common/v3/log"
+	cLog "intel/isecl/lib/common/v4/log"
 	"os"
 	"os/signal"
 	"sync"
