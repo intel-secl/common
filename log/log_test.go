@@ -9,8 +9,8 @@ import (
 	"os"
 	"testing"
 
-	"intel/isecl/lib/common/v4/log"
-	"intel/isecl/lib/common/v4/log/setup"
+	"intel/isecl/lib/common/v5/log"
+	"intel/isecl/lib/common/v5/log/setup"
 
 	"github.com/sirupsen/logrus"
 )

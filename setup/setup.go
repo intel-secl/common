@@ -7,7 +7,7 @@ package setup
 import (
 	"fmt"
 	"github.com/pkg/errors"
-	commLog "intel/isecl/lib/common/v4/log"
+	commLog "intel/isecl/lib/common/v5/log"
 	"os"
 	"reflect"
 	"strconv"
