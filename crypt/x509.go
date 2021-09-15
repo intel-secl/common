@@ -28,7 +28,7 @@ func GenerateKeyPair(keyType string, keyLength int) (crypto.PrivateKey, crypto.P
 
 	switch strings.ToLower(keyType) {
 	case "rsa":
-		if keyLength != 4096 {
+		if keyLength != 2048 && keyLength != 4096 {
 			keyLength = 3072
 		}
 		k, err := rsa.GenerateKey(rand.Reader, keyLength)
