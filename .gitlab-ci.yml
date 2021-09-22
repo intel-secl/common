@@ -1,4 +1,4 @@
-image: golang:1.14
+image: golang:1.16
 
 before_script:
   - git config --global http.proxy "${HTTP_PROXY}"
@@ -9,7 +9,7 @@ before_script:
 variables:
   HTTPS_PROXY: "${HTTP_PROXY}"
   no_proxy: "${NO_PROXY}"
-  
+
 stages:
   - build
   - test
@@ -19,6 +19,7 @@ test:
   tags:
     - go
   script:
+    - GOOS=linux GOSUMDB=off GOPROXY=direct go mod tidy
     - go test ./... -cover
 
 compile:
@@ -26,4 +27,5 @@ compile:
   tags:
     - go
   script:
+    - GOOS=linux GOSUMDB=off GOPROXY=direct go mod tidy
     - go build ./...

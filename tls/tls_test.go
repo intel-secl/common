@@ -16,6 +16,7 @@ import (
 	"io/ioutil"
 	"math/big"
 	"net/http"
+	"net/http/httptest"
 	"os"
 	"testing"
 	"time"
@@ -46,6 +47,17 @@ func createCert() ([]byte, *rsa.PrivateKey, error) {
 	return cert, priv, nil
 }
 
+func initTLSServer(keyfile, certfile string, m *http.ServeMux) *httptest.Server {
+	server := httptest.NewUnstartedServer(m)
+	cert, err := tls.LoadX509KeyPair(certfile, keyfile)
+	if err != nil {
+		return nil
+	}
+	server.TLS = &tls.Config{Certificates: []tls.Certificate{cert}}
+	server.StartTLS()
+	return server
+}
+
 func TestVerifyCertBySha384(t *testing.T) {
 
 	cert, priv, err := createCert()
@@ -62,10 +74,12 @@ func TestVerifyCertBySha384(t *testing.T) {
 	pem.Encode(keyFile, &pem.Block{Type: "RSA PRIVATE KEY", Bytes: x509.MarshalPKCS1PrivateKey(priv)})
 	keyFile.Close()
 
-	http.HandleFunc("/foo", func(w http.ResponseWriter, r *http.Request) {
+	mux := http.NewServeMux()
+	mux.Handle("/foo", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("bar"))
-	})
-	go http.ListenAndServeTLS(":1337", certFile.Name(), keyFile.Name(), nil)
+	}))
+	server := initTLSServer(keyFile.Name(), certFile.Name(), mux)
+	defer server.Close()
 
 	certDigest := sha512.Sum384(cert)
 	tlsConfig := tls.Config{
@@ -76,7 +90,7 @@ func TestVerifyCertBySha384(t *testing.T) {
 		TLSClientConfig: &tlsConfig,
 	}
 	client := &http.Client{Transport: &transport}
-	rsp, err := client.Get("https://localhost:1337/foo")
+	rsp, err := client.Get(server.URL + "/foo")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -106,10 +120,12 @@ func TestVerifyCertBySha256(t *testing.T) {
 	pem.Encode(keyFile, &pem.Block{Type: "RSA PRIVATE KEY", Bytes: x509.MarshalPKCS1PrivateKey(priv)})
 	keyFile.Close()
 
-	http.HandleFunc("/foobar", func(w http.ResponseWriter, r *http.Request) {
+	mux := http.NewServeMux()
+	mux.Handle("/foobar", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("bar"))
-	})
-	go http.ListenAndServeTLS(":1338", certFile.Name(), keyFile.Name(), nil)
+	}))
+	server := initTLSServer(keyFile.Name(), certFile.Name(), mux)
+	defer server.Close()
 
 	certDigest := sha256.Sum256(cert)
 	tlsConfig := tls.Config{
@@ -120,7 +136,7 @@ func TestVerifyCertBySha256(t *testing.T) {
 		TLSClientConfig: &tlsConfig,
 	}
 	client := &http.Client{Transport: &transport}
-	rsp, err := client.Get("https://localhost:1338/foobar")
+	rsp, err := client.Get(server.URL + "/foobar")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -132,12 +148,4 @@ func TestVerifyCertBySha256(t *testing.T) {
 	if rspString != "bar" {
 		t.Fail()
 	}
-}
-
-func TestGenerateSelfSignCerts(t *testing.T) {
-
-}
-
-func TestGenRSAKeys(t *testing.T) {
-
 }
