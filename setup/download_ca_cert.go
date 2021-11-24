@@ -54,6 +54,7 @@ func DownloadRootCaCertificate(cmsBaseUrl string, dirPath string, trustedTlsCert
 				MinVersion:         tls.VersionTLS12,
 				InsecureSkipVerify: true,
 			},
+			Proxy: http.ProxyFromEnvironment,
 		},
 	}
 	resp, err := client.Do(req)
