@@ -88,6 +88,7 @@ func GetCertificateFromCMS(certType string, keyAlg string, keyLen int, cmsBaseUr
 				InsecureSkipVerify: false,
 				RootCAs:            rootCAs,
 			},
+			Proxy: http.ProxyFromEnvironment,
 		},
 	}
 	resp, err := client.Do(req)
