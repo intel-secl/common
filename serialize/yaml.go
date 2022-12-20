@@ -31,7 +31,7 @@ func LoadFromYamlFile(path string, out interface{}) error {
 	if err != nil {
 		return err
 	}
-	err = yaml.UnmarshalStrict(yamlFile, out)
+	err = yaml.Unmarshal(yamlFile, out)
 	if err != nil {
 		return err
 	}
