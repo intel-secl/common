@@ -9,7 +9,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	yaml "gopkg.in/yaml.v2"
+	yaml "gopkg.in/yaml.v3"
 )
 
 // SaveToYamlFile saves input object to given file path
