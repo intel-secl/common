@@ -9,7 +9,7 @@ before_script:
 variables:
   HTTPS_PROXY: "${HTTP_PROXY}"
   no_proxy: "${NO_PROXY}"
-  
+
 stages:
   - build
   - test

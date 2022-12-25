@@ -6,14 +6,14 @@ package middleware
 
 import (
 	"fmt"
-	jwtauth "intel/isecl/lib/common/v4/jwt"
-	cos "intel/isecl/lib/common/v4/os"
-	ct "intel/isecl/lib/common/v4/types/aas"
+	jwtauth "intel/isecl/lib/common/v5/jwt"
+	cos "intel/isecl/lib/common/v5/os"
+	ct "intel/isecl/lib/common/v5/types/aas"
 	"net/http"
 
-	"intel/isecl/lib/common/v4/context"
-	clog "intel/isecl/lib/common/v4/log"
-	commLogMsg "intel/isecl/lib/common/v4/log/message"
+	"intel/isecl/lib/common/v5/context"
+	clog "intel/isecl/lib/common/v5/log"
+	commLogMsg "intel/isecl/lib/common/v5/log/message"
 	"strings"
 	"time"
 
