@@ -1,6 +1,6 @@
 # ISecL Common Library
 
-This library provides several utility functions such as jwt token verification, setup tasks, input validation, abstraction for crypto and command execution operations.
+This library provides several utility functions such as jwt token verification, setup tasks, input validation, abstraction for crypto and command execution operations. 
 
 ### Install `go` version 1.18.8
 The `common` requires Go version 1.18.8 that has support for `go modules`. The build was validated with the latest version go1.18.8 of `go`. It is recommended that you use go1.18.8 version of `go`. You can use the following to install `go`.
